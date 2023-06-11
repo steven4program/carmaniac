@@ -6,6 +6,8 @@ import { Modal } from 'bootstrap'
 function AdminProducts() {
   const [products, setProducts] = useState([])
   const [pagination, setPagination] = useState({})
+  const [type, setType] = useState('create')
+  const [tempProduct, setTempProduct] = useState({})
 
   const productModal = useRef(null)
 
@@ -25,7 +27,9 @@ function AdminProducts() {
     console.log(products)
   }
 
-  const openProductModal = () => {
+  const openProductModal = (type, product) => {
+    setType(type)
+    setTempProduct(product)
     productModal.current.show()
   }
 
@@ -38,6 +42,8 @@ function AdminProducts() {
       <ProductModal
         closeProductModal={closeProductModal}
         getProducts={getProducts}
+        tempProduct={tempProduct}
+        type={type}
       />
       <h3>產品列表</h3>
       <hr />
@@ -45,7 +51,7 @@ function AdminProducts() {
         <button
           type="button"
           className="btn btn-primary btn-sm"
-          onClick={openProductModal}
+          onClick={() => openProductModal('create', {})}
         >
           建立新商品
         </button>
@@ -69,7 +75,11 @@ function AdminProducts() {
                 <td>{product.price}</td>
                 <td>{product.is_enabled ? '啟用' : '未啟用'}</td>
                 <td>
-                  <button type="button" className="btn btn-primary btn-sm">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => openProductModal('edit', product)}
+                  >
                     編輯
                   </button>
                   <button
