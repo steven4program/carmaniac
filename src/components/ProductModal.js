@@ -7,7 +7,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     category: '',
     origin_price: 100,
     price: 300,
-    unit: '',
+    unit: '1',
     description: '',
     content: '',
     is_enabled: 1,
