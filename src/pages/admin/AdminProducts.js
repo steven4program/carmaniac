@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import ProductModal from '../../components/ProductModal'
+import DeleteModal from '../../components/DeleteModal'
 import { Modal } from 'bootstrap'
 
 function AdminProducts() {
@@ -10,11 +11,13 @@ function AdminProducts() {
   const [tempProduct, setTempProduct] = useState({})
 
   const productModal = useRef(null)
+  const deleteModal = useRef(null)
 
   useEffect(() => {
     productModal.current = new Modal('#productModal', {
       backdrop: 'static'
     })
+    deleteModal.current = new Modal('#deleteModal', { backdrop: 'static' })
     getProducts()
   }, [])
 
@@ -24,7 +27,6 @@ function AdminProducts() {
     )
     setProducts(productRes.data.products)
     setPagination(productRes.data.pagination)
-    console.log(products)
   }
 
   const openProductModal = (type, product) => {
@@ -37,6 +39,29 @@ function AdminProducts() {
     productModal.current.hide()
   }
 
+  const openDeleteModal = (product) => {
+    setTempProduct(product)
+    deleteModal.current.show()
+  }
+
+  const closeDeleteModal = () => {
+    deleteModal.current.hide()
+  }
+
+  const deleteProduct = async (id) => {
+    try {
+      const res = await axios.delete(
+        `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${id}`
+      )
+      if (res.data.success) {
+        getProducts()
+        deleteModal.current.hide()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="p-3">
       <ProductModal
@@ -44,6 +69,12 @@ function AdminProducts() {
         getProducts={getProducts}
         tempProduct={tempProduct}
         type={type}
+      />
+      <DeleteModal
+        close={closeDeleteModal}
+        text={tempProduct.title}
+        handleDelete={deleteProduct}
+        id={tempProduct.id}
       />
       <h3>產品列表</h3>
       <hr />
@@ -85,6 +116,7 @@ function AdminProducts() {
                   <button
                     type="button"
                     className="btn btn-outline-danger btn-sm ms-2"
+                    onClick={() => openDeleteModal(product)}
                   >
                     刪除
                   </button>

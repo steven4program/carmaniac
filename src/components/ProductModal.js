@@ -30,7 +30,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     } else if (type === 'edit') {
       setTempData(tempProduct)
     }
-    console.log(type, tempProduct)
   }, [type, tempProduct])
 
   const submit = async () => {
