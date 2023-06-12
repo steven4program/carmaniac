@@ -13,7 +13,7 @@ function ProductDetail() {
 	const [isLoading, setIsLoading] = useState(false);
 	const { getCart } = useOutletContext();
 
-	const getProduct = async () => {
+	const getProduct = async (id) => {
 		const productRes = await axios.get(
 			`/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`
 		);
