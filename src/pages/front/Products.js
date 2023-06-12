@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination';
+import { Link } from 'react-router-dom';
 
 function Products() {
 	const [products, setProducts] = useState([]);
@@ -38,7 +39,7 @@ function Products() {
 									/>
 									<div className="card-body p-0">
 										<h5 className="mb-0 mt-3">
-											<a href="#">{product.title}</a>
+											<Link to={`/product/${product.id}`}>{product.title}</Link>
 										</h5>
 										<p className="text-muted mt-2">
 											NT$ {priceWithCommas(product.price)}
