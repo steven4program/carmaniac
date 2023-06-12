@@ -8,7 +8,9 @@ function ProductDetail() {
 	};
 
 	const [product, setProduct] = useState({});
+	const [carQuantity, setCarQuantity] = useState(1);
 	const { id } = useParams();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const getProduct = async () => {
 		const productRes = await axios.get(
@@ -20,6 +22,27 @@ function ProductDetail() {
 			price: priceWithCommas(productData.price),
 		});
 		console.log(productRes);
+	};
+
+	const addToCart = async () => {
+		const data = {
+			data: {
+				product_id: id,
+				qty: carQuantity,
+			},
+		};
+		setIsLoading(true);
+		try {
+			const res = await axios.post(
+				`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
+				data
+			);
+			console.log(res);
+			setIsLoading(false);
+		} catch (error) {
+			console.log(error);
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
@@ -51,8 +74,11 @@ function ProductDetail() {
 								className="btn btn-outline-dark rounded-0 border-0 py-3"
 								type="button"
 								id="button-addon1"
+								onClick={() => {
+									setCarQuantity((pre) => (pre === 1 ? pre : pre - 1));
+								}}
 							>
-								<i className="fas fa-minus"></i>
+								<i className="bi bi-dash"></i>
 							</button>
 						</div>
 						<input
@@ -61,23 +87,33 @@ function ProductDetail() {
 							placeholder=""
 							aria-label="Example text with button addon"
 							aria-describedby="button-addon1"
+							readOnly
+							value={carQuantity}
 						/>
 						<div className="input-group-append">
 							<button
 								className="btn btn-outline-dark rounded-0 border-0 py-3"
 								type="button"
 								id="button-addon2"
+								onClick={() => {
+									setCarQuantity((pre) => (pre === 5 ? pre : pre + 1));
+								}}
 							>
-								<i className="fas fa-plus"></i>
+								<i className="bi bi-plus"></i>
 							</button>
 						</div>
 					</div>
-					<a
+					<button
+						type="button"
 						href="./checkout.html"
-						className="btn btn-dark btn-block rounded-0 py-3"
+						className="btn btn-dark w-100 rounded-0 py-3"
+						onClick={() => {
+							addToCart();
+						}}
+						disabled={isLoading}
 					>
-						Lorem ipsum
-					</a>
+						加入訂單
+					</button>
 				</div>
 			</div>
 		</div>
