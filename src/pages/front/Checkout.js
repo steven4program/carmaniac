@@ -2,9 +2,12 @@ import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../components/FormElements';
 import axios from 'axios';
+import Loading from '../../components/Loading';
+import { useState } from 'react';
 
 function Checkout() {
 	const { cartData } = useOutletContext();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		register,
@@ -17,6 +20,7 @@ function Checkout() {
 	const navigate = useNavigate();
 
 	const onSubmit = async (data) => {
+		setIsLoading(true);
 		const { name, email, tel, address } = data;
 		const form = {
 			data: {
@@ -32,12 +36,14 @@ function Checkout() {
 			`/v2/api/${process.env.REACT_APP_API_PATH}/order`,
 			form
 		);
+		setIsLoading(false);
 		console.log(res);
 		navigate(`/success/${res.data.orderId}`);
 	};
 
 	return (
 		<div className="bg-light pt-5 pb-7">
+			<Loading isLoading={isLoading} />
 			<div className="container">
 				<div className="row justify-content-center flex-md-row flex-column-reverse">
 					<form className="col-md-6" onSubmit={handleSubmit(onSubmit)}>

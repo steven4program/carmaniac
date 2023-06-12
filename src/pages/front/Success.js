@@ -22,28 +22,32 @@ function Success() {
 				style={{
 					minHeight: '400px',
 					backgroundImage:
-						'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)',
+						'url(https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)',
 					backgroundPosition: 'center center',
 				}}
+				className="object-cover"
 			></div>
 			<div className="mt-5 mb-7">
 				<div className="row">
 					<div className="col-md-6">
-						<h2>餐點選購成功</h2>
+						<h2>訂單送出成功</h2>
 						<p className="text-muted">
-							親愛的顧客，感謝您在本平台訂餐。我們非常感激您對我們的信任和支持，讓我們有機會為您提供美味的餐點和優質的服務。
+							親愛的顧客，感謝您在本平台訂車。我們非常感激您對我們的信任和支持，讓我們有機會為您提供精美的車款和優質的服務。
 						</p>
 						<p className="text-muted">
-							感謝您選擇本平台，祝您用餐愉快，生活愉快！
+							感謝您選擇本平台，後續將由業務與您洽談付款及交車時序，祝您行車愉快！
 						</p>
-						<Link to="/" className="btn btn-outline-dark me-2 rounded-0 mb-4">
+						<Link
+							to="/products"
+							className="btn btn-outline-dark me-2 rounded-0 mb-4"
+						>
 							回到首頁
 						</Link>
 					</div>
 					<div className="col-md-6">
 						<div className="card rounded-0 py-4">
 							<div className="card-header border-bottom-0 bg-white px-4 py-0">
-								<h2>選購餐點細節</h2>
+								<h2>訂單概要</h2>
 							</div>
 							<div className="card-body px-4 py-0">
 								<ul className="list-group list-group-flush">

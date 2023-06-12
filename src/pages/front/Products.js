@@ -2,18 +2,21 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination';
 import { Link } from 'react-router-dom';
+import Loading from '../../components/Loading';
 
 function Products() {
 	const [products, setProducts] = useState([]);
 	const [pagination, setPagination] = useState({});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const getProducts = async (page = 1) => {
+		setIsLoading(true);
 		const productRes = await axios.get(
 			`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`
 		);
 		setProducts(productRes.data.products);
 		setPagination(productRes.data.pagination);
-		console.log(productRes);
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -23,6 +26,7 @@ function Products() {
 	return (
 		<>
 			<div className="container mt-md-5 mt-3 mb-7">
+				<Loading isLoading={isLoading} />
 				<div className="row">
 					{products.map((product) => {
 						const priceWithCommas = (price) => {
