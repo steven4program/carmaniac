@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 function ProductDetail() {
 	const priceWithCommas = (price) => {
@@ -11,6 +11,7 @@ function ProductDetail() {
 	const [carQuantity, setCarQuantity] = useState(1);
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
+	const { getCart } = useOutletContext();
 
 	const getProduct = async () => {
 		const productRes = await axios.get(
@@ -38,6 +39,7 @@ function ProductDetail() {
 				data
 			);
 			console.log(res);
+			getCart();
 			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
