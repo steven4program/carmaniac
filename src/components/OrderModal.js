@@ -6,7 +6,7 @@ import {
 	handleErrorMessage,
 } from '../store/messageStore';
 
-function ProductModal({ closeProductModal, getOrders, tempOrder }) {
+function ProductModal({ closeOrderModal, getOrders, tempOrder }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [tempData, setTempData] = useState({
 		is_paid: '',
@@ -43,6 +43,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 			});
 			handleSuccessMessage(dispatch, res);
 			setIsLoading(false);
+			closeOrderModal();
 			getOrders();
 		} catch (error) {
 			console.log(error);
@@ -69,7 +70,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 							type="button"
 							className="btn-close"
 							aria-label="Close"
-							onClick={closeProductModal}
+							onClick={closeOrderModal}
 						/>
 					</div>
 					<div className="modal-body">
@@ -98,7 +99,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 							</div>
 						</div>
 						<div className="mb-3 row">
-							<span className="col-sm-2 col-form-label">外送地址</span>
+							<span className="col-sm-2 col-form-label">購買人地址</span>
 							<div className="col-sm-10">
 								<input
 									type="text"
@@ -125,7 +126,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 							<table className="table">
 								<thead>
 									<tr>
-										<th>品項名稱</th>
+										<th>車款</th>
 										<th>數量</th>
 									</tr>
 								</thead>
@@ -164,7 +165,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 							</div>
 							<div className="mb-4">
 								<span className="col-sm-2 col-form-label d-block">
-									外送進度
+									交車進度
 								</span>
 								<select
 									className="form-select"
@@ -175,7 +176,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 								>
 									<option value={0}>未確認</option>
 									<option value={1}>已確認</option>
-									<option value={2}>外送中</option>
+									<option value={2}>貨運中</option>
 									<option value={3}>已送達</option>
 								</select>
 							</div>
@@ -185,7 +186,7 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
 						<button
 							type="button"
 							className="btn btn-secondary"
-							onClick={closeProductModal}
+							onClick={closeOrderModal}
 						>
 							關閉
 						</button>

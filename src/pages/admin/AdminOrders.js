@@ -38,7 +38,7 @@ function AdminOrders() {
 	return (
 		<div className="p-3">
 			<OrderModal
-				closeProductModal={closeOrderModal}
+				closeOrderModal={closeOrderModal}
 				getOrders={getOrders}
 				tempOrder={tempOrder}
 			/>
