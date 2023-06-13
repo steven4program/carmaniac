@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice';
 
 function ProductDetail() {
 	const priceWithCommas = (price) => {
@@ -12,6 +14,7 @@ function ProductDetail() {
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(false);
 	const { getCart } = useOutletContext();
+	const dispatch = useDispatch();
 
 	const getProduct = async (id) => {
 		const productRes = await axios.get(
@@ -22,7 +25,6 @@ function ProductDetail() {
 			...productData,
 			price: priceWithCommas(productData.price),
 		});
-		console.log(productRes);
 	};
 
 	const addToCart = async () => {
@@ -38,12 +40,13 @@ function ProductDetail() {
 				`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
 				data
 			);
-			console.log(res);
+			dispatch(createAsyncMessage(res.data));
 			getCart();
 			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
 			setIsLoading(false);
+			dispatch(createAsyncMessage(error.response.data));
 		}
 	};
 

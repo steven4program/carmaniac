@@ -34,7 +34,6 @@ function AdminProducts() {
 		);
 		setProducts(productRes.data.products);
 		setPagination(productRes.data.pagination);
-		console.log(productRes);
 	};
 
 	const openProductModal = (type, product) => {

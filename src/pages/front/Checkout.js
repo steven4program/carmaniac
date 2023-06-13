@@ -37,7 +37,6 @@ function Checkout() {
 			form
 		);
 		setIsLoading(false);
-		console.log(res);
 		navigate(`/success/${res.data.orderId}`);
 	};
 

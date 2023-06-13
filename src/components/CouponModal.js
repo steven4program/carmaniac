@@ -51,7 +51,6 @@ function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
 			handleSuccessMessage(dispatch, res);
 			getCoupons();
 			closeModal();
-			console.log(res);
 		} catch (error) {
 			handleErrorMessage(dispatch, error);
 			console.log(error);

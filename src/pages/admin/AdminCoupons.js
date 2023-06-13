@@ -34,7 +34,6 @@ function AdminCoupons() {
 		);
 		setCoupons(res.data.coupons);
 		setPagination(res.data.pagination);
-		console.log(res);
 	};
 
 	const openCouponModal = (type, item) => {

@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice';
 
 function Cart() {
 	const { cartData, getCart } = useOutletContext();
 	const [loadingItems, setLoadingItems] = useState([]);
+	const dispatch = useDispatch();
 
 	const removeCartItem = async (id) => {
 		try {
@@ -12,7 +15,6 @@ function Cart() {
 				`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`
 			);
 			getCart();
-			console.log(res);
 		} catch (error) {
 			console.log(error);
 		}
@@ -31,13 +33,17 @@ function Cart() {
 				`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
 				data
 			);
+			dispatch(createAsyncMessage(res.data));
 			getCart();
 			setLoadingItems(
 				loadingItems.filter((loadingObject) => loadingObject !== item.id)
 			);
-			console.log(res);
 		} catch (error) {
+			dispatch(createAsyncMessage(error.response.data));
 			console.log(error);
+			setLoadingItems(
+				loadingItems.filter((loadingObject) => loadingObject !== item.id)
+			);
 		}
 	};
 

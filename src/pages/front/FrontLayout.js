@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import MessageToast from '../../components/MessageToast';
 
 function FrontLayout() {
 	const priceWithCommas = (price) => {
@@ -15,7 +16,6 @@ function FrontLayout() {
 			const res = await axios.get(
 				`/v2/api/${process.env.REACT_APP_API_PATH}/cart`
 			);
-			console.log('Cart: ', res);
 			let data = res.data.data;
 			setCartData({
 				...data,
@@ -33,6 +33,7 @@ function FrontLayout() {
 	return (
 		<>
 			<Navbar cartData={cartData} />
+			<MessageToast />
 			<Outlet context={{ getCart, cartData }} />
 			<div className="bg-dark">
 				<div className="container">

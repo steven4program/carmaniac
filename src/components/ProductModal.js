@@ -52,7 +52,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
 			});
 			getProducts();
 			closeProductModal();
-			console.log(res);
 			handleSuccessMessage(dispatch, res);
 		} catch (error) {
 			console.log(error);

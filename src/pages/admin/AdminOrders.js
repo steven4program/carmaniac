@@ -22,7 +22,6 @@ function AdminOrders() {
 		const res = await axios.get(
 			`/v2/api/${process.env.REACT_APP_API_PATH}/admin/orders?page=${page}`
 		);
-		console.log(res);
 		setOrders(res.data.orders);
 		setPagination(res.data.pagination);
 	};
